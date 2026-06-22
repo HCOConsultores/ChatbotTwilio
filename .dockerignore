@@ -1,0 +1,8 @@
+# .dockerignore
+bin/
+obj/
+out/
+*.user
+*.suo
+.vs/
+.vscode/

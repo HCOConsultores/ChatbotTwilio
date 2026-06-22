@@ -1,0 +1,6 @@
+@chatBotTwilio_HostAddress = http://localhost:5232
+
+GET {{chatBotTwilio_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,32 @@
+"BPI.csproj", "./"]
+RUN dotnet restore "./BPI.csproj"
+COPY . .
+WORKDIR "/src/."
+RUN dotnet build "BPI.csproj" -c Release -o /app/build
+
+# Publica la aplicación
+FROM build AS publish
+RUN dotnet publish "BPI.csproj" -c Release -o /app/publish
+
+# Usa la imagen base para ejecutar la aplicación
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "BPI.dll"]
+
+
+
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chatbot-api
+    ports:
+      - "5008:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT:"Development"
+      - ASPNETCORE_URLS=http://+80
+    restart: unless-stopped
