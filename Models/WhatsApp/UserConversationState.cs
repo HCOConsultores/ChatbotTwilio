@@ -84,8 +84,6 @@ namespace chatBotTwilio.Models.WhatsApp
             LastInteraction = DateTime.UtcNow;
             CreatedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
-            ProjectPhotoCount = new Dictionary<int, ProjectPhotoInfo>();
-            TempData = new Dictionary<string, string>();
         }
 
         public class ProjectPhotoInfo
