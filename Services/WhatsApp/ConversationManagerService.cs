@@ -60,6 +60,7 @@ namespace chatBotTwilio.Services.WhatsApp
             }
 
             state.LastInteraction = DateTime.UtcNow;
+            state.SyncJson();
             await _stateRepository.SaveStateAsync(state);
             return response;
         }

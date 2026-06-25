@@ -1,4 +1,4 @@
-﻿using chatBotTwilio.Models.WhatsApp;
+using chatBotTwilio.Models.WhatsApp;
 using Microsoft.EntityFrameworkCore;
 
 namespace chatBotTwilio.Services.WhatsApp
@@ -39,6 +39,8 @@ namespace chatBotTwilio.Services.WhatsApp
                             CreatedAt        = s.CreatedAt,
                             UpdatedAt        = s.UpdatedAt,
                             LastInteraction  = s.LastInteraction,
+                            TempDataJson     = s.TempDataJson,
+                            ProjectPhotoInfoJson = s.ProjectPhotoInfoJson
                             
                         })
                         .FirstOrDefaultAsync();
@@ -104,6 +106,8 @@ namespace chatBotTwilio.Services.WhatsApp
                     existingState.Ot               = state.Ot ?? existingState.Ot;
                     existingState.CurrentNoteType  = state.CurrentNoteType ?? existingState.CurrentNoteType;
                     existingState.Descripcorta     = state.Descripcorta ?? existingState.Descripcorta;
+                    existingState.TempDataJson     = state.TempDataJson ?? existingState.TempDataJson;
+                    existingState.ProjectPhotoInfoJson = state.ProjectPhotoInfoJson ?? existingState.ProjectPhotoInfoJson;
 
                     existingState.UpdatedAt = DateTime.UtcNow;
                     

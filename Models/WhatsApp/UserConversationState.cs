@@ -29,34 +29,52 @@ namespace chatBotTwilio.Models.WhatsApp
         // Nuevo campo para almacenar datos temporales durante los flujos de captura
         public string? TempDataJson { get; set; }
 
+        private Dictionary<string, string> _tempData;
         [NotMapped]
         public Dictionary<string, string> TempData
         {
             get
             {
-                return string.IsNullOrEmpty(TempDataJson)
-                    ? new Dictionary<string, string>()
-                    : JsonSerializer.Deserialize<Dictionary<string, string>>(TempDataJson);
+                if (_tempData == null)
+                {
+                    _tempData = string.IsNullOrEmpty(TempDataJson)
+                        ? new Dictionary<string, string>()
+                        : JsonSerializer.Deserialize<Dictionary<string, string>>(TempDataJson);
+                }
+                return _tempData;
             }
             set
             {
+                _tempData = value;
                 TempDataJson = JsonSerializer.Serialize(value);
             }
         }
 
+        private Dictionary<int, ProjectPhotoInfo> _projectPhotoCount;
         [NotMapped]
         public Dictionary<int, ProjectPhotoInfo> ProjectPhotoCount
         {
             get
             {
-                return string.IsNullOrEmpty(ProjectPhotoInfoJson)
-                    ? new Dictionary<int, ProjectPhotoInfo>()
-                    : JsonSerializer.Deserialize<Dictionary<int, ProjectPhotoInfo>>(ProjectPhotoInfoJson);
+                if (_projectPhotoCount == null)
+                {
+                    _projectPhotoCount = string.IsNullOrEmpty(ProjectPhotoInfoJson)
+                        ? new Dictionary<int, ProjectPhotoInfo>()
+                        : JsonSerializer.Deserialize<Dictionary<int, ProjectPhotoInfo>>(ProjectPhotoInfoJson);
+                }
+                return _projectPhotoCount;
             }
             set
             {
+                _projectPhotoCount = value;
                 ProjectPhotoInfoJson = JsonSerializer.Serialize(value);
             }
+        }
+
+        public void SyncJson()
+        {
+            if (_tempData != null) TempDataJson = JsonSerializer.Serialize(_tempData);
+            if (_projectPhotoCount != null) ProjectPhotoInfoJson = JsonSerializer.Serialize(_projectPhotoCount);
         }
 
         public ConversationState(string phoneNumber)
